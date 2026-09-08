@@ -1,0 +1,132 @@
+// ==UserScript==
+// @name         Knowt Flashcard Enhancer & Auto Voice Reader
+// @namespace    http://tampermonkey.net/
+// @version      1.1
+// @description  try to take over the world!
+// @author       You
+// @match        https://knowt.com/study/flashcards/*
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=knowt.com
+// @grant        none
+// ==/UserScript==
+
+
+(function () {
+    'use strict';
+
+    const KEY_VOL = 'knowt_tts_volume';
+    const KEY_DELAY = 'knowt_tts_delay';
+
+    let volume = parseInt(localStorage.getItem(KEY_VOL)) ?? 100;
+    let delaySec = parseFloat(localStorage.getItem(KEY_DELAY)) ?? 0;
+    let lastQuestionText = '';
+    let speechTimer = null;
+
+    function getVoice(lang) {
+        const voices = window.speechSynthesis.getVoices();
+        if (lang === 'ja') return voices.find(v => v.lang.startsWith('ja')) || null;
+        return voices.find(v => v.lang.startsWith('en')) || null;
+    }
+
+    function speakText(text) {
+        if (!text) return;
+        window.speechSynthesis.cancel();
+        if (speechTimer) clearTimeout(speechTimer);
+
+        speechTimer = setTimeout(() => {
+            const utterance = new SpeechSynthesisUtterance(text);
+            const isJapanese = /[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff]/.test(text);
+
+            utterance.lang = isJapanese ? 'ja-JP' : 'en-US';
+            const voice = getVoice(isJapanese ? 'ja' : 'en');
+            if (voice) utterance.voice = voice;
+            utterance.volume = Math.min(1.0, volume / 100);
+
+            window.speechSynthesis.speak(utterance);
+        }, delaySec * 1000);
+    }
+
+    // Nhúng 2 thanh trượt nút gạt Vol & Delay vào Header
+    function injectHeaderControls() {
+        const navbar = document.querySelector('.studyNavbar-module__ci9FBa__container');
+        if (!navbar || document.querySelector('#knowt-custom-controls')) return;
+
+        const controlsWrapper = document.createElement('div');
+        controlsWrapper.id = 'knowt-custom-controls';
+        controlsWrapper.style.cssText = `
+            display: flex; align-items: center; gap: 12px;
+            background: rgba(255, 255, 255, 0.1); padding: 4px 10px;
+            border-radius: 6px; font-size: 12px; color: #fff;
+            margin-left: auto; user-select: none; z-index: 999;
+        `;
+
+        controlsWrapper.innerHTML = `
+            <div style="display:flex; align-items:center; gap:5px;">
+                <span>Vol:</span>
+                <input type="range" id="knowt-vol-slider" min="0" max="300" value="${volume}" style="width:165px; cursor:pointer;">
+                <span id="knowt-vol-val" style="text-align:right;">${volume}%</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:5px;">
+                <span>Delay:</span>
+                <input type="range" id="knowt-delay-slider" min="0" max="10" step="0.5" value="${delaySec}" style="width:85px; cursor:pointer;">
+                <span id="knowt-delay-val" style="text-align:right;">${delaySec}s</span>
+            </div>
+        `;
+
+        navbar.appendChild(controlsWrapper);
+
+        // Sự kiện nút gạt Vol
+        controlsWrapper.querySelector('#knowt-vol-slider').addEventListener('input', (e) => {
+            volume = parseInt(e.target.value);
+            controlsWrapper.querySelector('#knowt-vol-val').textContent = `${volume}%`;
+            localStorage.setItem(KEY_VOL, volume);
+        });
+
+        // Sự kiện nút gạt Delay
+        controlsWrapper.querySelector('#knowt-delay-slider').addEventListener('input', (e) => {
+            delaySec = parseFloat(e.target.value);
+            controlsWrapper.querySelector('#knowt-delay-val').textContent = `${delaySec}s`;
+            localStorage.setItem(KEY_DELAY, delaySec);
+        });
+    }
+
+    function updateState() {
+        const setTitleEl = document.querySelector('.ellipsisText.MuiBox-root.knowt-6o8n9d') || document.querySelector('.studyNavbar-module__ci9FBa__container .ellipsisText');
+        if (setTitleEl && setTitleEl.textContent.trim()) {
+            if (document.title !== setTitleEl.textContent.trim()) document.title = setTitleEl.textContent.trim();
+        }
+
+        injectHeaderControls();
+
+        const quesEl = document.querySelector('.breakpoints-module__zbexiG__mdDownColumnReverse');
+        if (quesEl) {
+            const currentFullText = quesEl.innerText.trim();
+            if (!currentFullText) return;
+
+            // Chỉ lấy dòng đầu tiên thay cho Term
+            const firstLine = currentFullText.split('\n')[0].trim();
+
+            const termBox = document.querySelector('.studyPage-module__2Yqjuq__skeletonHeader .breakpoints-module__zbexiG__smDownDisplayNone');
+            if (termBox && termBox.textContent !== firstLine) {
+                termBox.textContent = firstLine;
+            }
+
+            if (currentFullText !== lastQuestionText) {
+                lastQuestionText = currentFullText;
+                speakText(currentFullText);
+            }
+        }
+    }
+
+    window.addEventListener('keydown', (e) => {
+        const isNumpad0 = e.code === 'Numpad0' || (e.key === '0' && e.location === 3);
+        const isNumpadDot = e.code === 'NumpadDecimal' || e.key === '.';
+        if ((isNumpad0 || isNumpadDot) && lastQuestionText) {
+            speakText(lastQuestionText);
+        }
+    });
+
+    const observer = new MutationObserver(() => updateState());
+    observer.observe(document.body, { childList: true, subtree: true, characterData: true });
+
+    if (speechSynthesis.onvoiceschanged !== undefined) speechSynthesis.onvoiceschanged = () => {};
+})();
