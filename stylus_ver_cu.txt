@@ -1,0 +1,116 @@
+/* ==UserStyle==
+@name           knowt.com
+@namespace      github.com/openstyles/stylus
+@version        1.0.0
+@description    A new userstyle
+@author         Me
+==/UserStyle== */
+
+@-moz-document url-prefix("https://knowt.com/study/flashcards/") {
+    
+/*     header zone */
+   .flex-module__Q1Fv2q__flex.flex-module__Q1Fv2q__flexRow.flex-module__Q1Fv2q__alignItemsCenter.studyNavbar-module__ci9FBa__container{
+       max-height: 50px;
+    }
+    
+    
+/*     khoảng cách từ thanh div chứa cả ques và ans tới thanh công cụ header   */
+div.breakpoints-module__zbexiG__smDownDisplayNone {
+    padding-top: 5px !important;
+}
+        
+
+/*    full page dưới --- trừ header */
+    div.studyPage-module__2Yqjuq__container{
+        width: 1000px !important;
+        min-width: 95% !important;
+    }
+    
+/*      div chứa cả ques và ans  */
+    .flex-module__Q1Fv2q__flex.flex-module__Q1Fv2q__flexColumn.studyPage-module__2Yqjuq__flashcardCard {
+        padding: 5px 20px !important;
+        display: flex !important;
+        justify-content: center; 
+        align-items: center;
+    }
+    
+    /*     khoảng cách từ ques tới (tiến độ ; loa ; sửa) */
+    div.breakpoints-module__zbexiG__mdDownColumnReverse{
+        margin: 9px 0px 0px 0px!important;
+        
+    }
+    
+        .flex-module__Q1Fv2q__flex.flex-module__Q1Fv2q__flexRow.flex-module__Q1Fv2q__alignItemsCenter.breakpoints-module__zbexiG__mdDownColumnReverse 
+    {        display: flex !important;
+        justify-content: center; 
+        align-items: center;
+    }
+/*     cỡ chữ ques */
+    .flex-module__Q1Fv2q__flex.flex-module__Q1Fv2q__flexRow.flex-module__Q1Fv2q__alignItemsCenter.breakpoints-module__zbexiG__mdDownColumnReverse p{
+        font-size: 4.7rem;
+
+
+    }
+
+    
+/*     chữ phần ans */
+    .ProseMirror.new_bodyS p
+    {
+        font-size: 2.5rem;
+        display: flex;
+        justify-content: center; 
+        align-items: center;
+    }
+    
+
+/*     tiến độ học của thẻ đó */
+    .flex-module__Q1Fv2q__flex.flex-module__Q1Fv2q__flexRow.flex-module__Q1Fv2q__alignItemsCenter span.flex-module__Q1Fv2q__flex.flex-module__Q1Fv2q__flexRow.flex-module__Q1Fv2q__alignItemsCenter {
+        scale: 20%;
+        transform: translateX(350px);
+    }
+    
+    span.bold
+    ,.breakpoints-module__zbexiG__smDownDisplayNone .MuiGrid-root.MuiGrid-direction-xs-row.knowt-1n5khr6 
+    
+    {
+    display: none !important;
+}
+}
+
+@-moz-document url-prefix("https://knowt.com/stud11111111111111_______backup") {
+    
+
+
+    
+div.breakpoints-module__zbexiG__mdDownColumnReverse div.ProseMirror {
+    margin-left: 90px !important;
+}
+    
+    
+div.studyNavbar-module__ci9FBa__container {
+    height: 60px !important; /* Ép chiều cao mỏng lại */
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+    gap: 0.5rem !important; /* Thu hẹp khoảng cách giữa các nút */
+    overflow: hidden !important; /* Ẩn đi những phần tử thừa bị tràn */
+}
+    
+    
+    
+    
+    
+    
+    div.studyPage-module__2Yqjuq__container{
+        height: calc(100vh - var(--90vh)) !important;
+    }
+    div.knowt-lbl9ok{
+         padding: 18px !important;
+    }
+    
+
+.flashcardWithAnswerInput-module__IzbJIa__optionTemplateColumn {
+    gap: 1rem !important; /* Thu hẹp một chút khoảng trống giữa các đáp án nếu cần */
+}
+    
+}
+
