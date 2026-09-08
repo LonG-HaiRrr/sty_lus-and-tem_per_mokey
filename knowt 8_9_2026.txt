@@ -1,0 +1,128 @@
+/* ==UserStyle==
+@name           Knowt.com Custom Study & Fonts (Spacing Fixed)
+@namespace      github.com/openstyles/stylus
+@version        1.4.0
+@description    Fix khoảng cách chữ Nhật không bị thưa, giữ font đánh máy
+@author         Me
+==/UserStyle== */
+
+@-moz-document url-prefix("https://knowt.com/study/") {
+
+
+/*
+    Bạn có thể chèn dòng @import này vào ngay đầu file Stylus để tải font từ Google về máy:
+        
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Dancing+Script:wght@700&family=Yuji+Syuku&display=swap');
+Các mẫu font-family để copy thay thế vào :
+
+Phong cách Thư pháp Nhật / Hán tự (Yuji Syuku):
+font-family: 'Yuji Syuku', 'DFKai-SB', 'KaiTi', serif !important;
+    
+    
+Phong cách Bút viết tay / Thư pháp mềm mại (Dancing Script):
+font-family: 'Dancing Script', 'Brush Script MT', cursive !important;
+    
+Phong cách Bút mực cá nhân (Caveat):
+font-family: 'Caveat', 'Segoe Script', cursive !important;
+    
+Phong cách Cổ điển / Máy đánh chữ khác cho Câu hỏi (Gợi ý thêm nếu muốn đổi font câu hỏi):
+font-family: 'VT323', 'Courier New', monospace !important; */
+    
+    
+    
+    
+    /* --- Header --- */
+    .flex-module__Q1Fv2q__flex.flex-module__Q1Fv2q__flexRow.flex-module__Q1Fv2q__alignItemsCenter.studyNavbar-module__ci9FBa__container {
+        max-height: 50px !important;
+        padding: 0 15px !important;
+    }
+
+    div.studyPage-module__2Yqjuq__container {
+        width: 1000px !important;
+        min-width: 85% !important;
+    }
+
+    /* --- 1. DÒNG ĐẦU CÂU HỎI TRÊN CÙNG (Thay Term) --- */
+    div.breakpoints-module__zbexiG__smDownDisplayNone {
+        margin: 0 auto !important;
+        padding: 0 !important;
+        font-size: 3.5rem !important;
+        font-weight: bold !important;
+        color: #ffffff !important;
+        text-align: center !important;
+        width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        font-family: 'Dancing Script', 'Yuji Syuku', 'KaiTi', cursive !important;
+        letter-spacing: normal !important;
+        transform: translateX(180px);
+    }
+
+    /* --- 2. CÂU HỎI (QUES) - BỎ LETTER-SPACING ĐỂ CHỮ NHẬT KHÔNG BỊ THƯA --- */
+    div.breakpoints-module__zbexiG__mdDownColumnReverse {
+        margin: 15px 0 !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        width: 100% !important;
+    }
+
+    .breakpoints-module__zbexiG__mdDownColumnReverse,
+    .breakpoints-module__zbexiG__mdDownColumnReverse p,
+    .breakpoints-module__zbexiG__mdDownColumnReverse span {
+        font-family: 'Consolas', 'Courier New', 'MS Gothic', 'Yu Gothic', monospace !important;
+        font-size: 4.99rem !important;
+/*         font-weight: bold !important; */
+        text-align: center !important;
+        letter-spacing: normal !important; /* Triệt tiêu khoảng cách thưa chữ Nhật */
+        word-spacing: normal !important;
+    }
+
+    /* --- 3. ĐÁP ÁN (ANS) - CĂN GIỮA NỘI DUNG --- */
+    .MuiGrid-root.MuiGrid-container button,
+    .MuiGrid-root.MuiGrid-container div[role="button"],
+    div.studyPage-module__2Yqjuq__flashcardCard button {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+    
+    .flex-module__Q1Fv2q__flex.flex-module__Q1Fv2q__flexRow.flex-module__Q1Fv2q__alignItemsCenter span.flex-module__Q1Fv2q__flex.flex-module__Q1Fv2q__flexRow.flex-module__Q1Fv2q__alignItemsCenter 
+
+    {
+        scale: 30%;
+        transform: translateX(250px);
+    }
+
+    .MuiGrid-root.MuiGrid-container button p,
+    .MuiGrid-root.MuiGrid-container button span,
+    .MuiGrid-root.MuiGrid-container div[role="button"] p,
+    .ProseMirror.new_bodyS,
+    .ProseMirror.new_bodyS p {
+        text-align: center !important;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+        font-size: 2.9rem !important;
+        font-weight: 500 !important;
+        width: 100% !important;
+        letter-spacing: normal !important;
+    }
+    
+    
+.flex-module__Q1Fv2q__flex.flex-module__Q1Fv2q__flexRow.flex-module__Q1Fv2q__alignItemsCenter .flex-module__Q1Fv2q__flex.flex-module__Q1Fv2q__flexColumn p{
+    font-size: 2.9rem !important;
+    }
+    
+    
+/*     Press any key to continue */
+    .flex-module__Q1Fv2q__flex.flex-module__Q1Fv2q__flexColumn .flex-module__Q1Fv2q__flex.flex-module__Q1Fv2q__flexRow.flex-module__Q1Fv2q__alignItemsCenter.breakpoints-module__zbexiG__smDownColumn .breakpoints-module__zbexiG__smDownDisplayNone.MuiBox-root.knowt-erue1f {
+        font-size: 2rem !important;
+        transform: translateX(-10px);
+    }
+
+    /* Ẩn rác */
+    span.bold,
+    .breakpoints-module__zbexiG__smDownDisplayNone .MuiGrid-root.MuiGrid-direction-xs-row.knowt-1n5khr6 {
+        display: none !important;
+    }
+}
